@@ -1,161 +1,98 @@
 <template>
-  <v-card
-    :loading="loading"
-    class="mx-auto my-12"
-    max-width="374"
-  >
-    <template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
-    </template>
-
-    <v-img
-      height="250"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-    ></v-img>
-
-    <v-card-title>Cafe Badilico</v-card-title>
-
-    <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
-        <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ms-4">
-          4.5 (413)
-        </div>
-      </v-row>
-
-      <div class="my-4 text-subtitle-1">
-        Chapter ...
-      </div>
-    </v-card-text>
-<!--    <v-divider class="mx-4"></v-divider>-->
-    <v-card-title>Tonight's availability</v-card-title>
-<!--    <v-card-actions>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-        @click="reserve"
-      >
-        Reserve
-      </v-btn>
-    </v-card-actions>-->
-    <template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
-    </template>
-
-    <v-img
-      height="250"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-    ></v-img>
-
-    <v-card-title>Cafe Badilico</v-card-title>
-
-    <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
-        <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ms-4">
-          4.5 (413)
-        </div>
-      </v-row>
-
-      <div class="my-4 text-subtitle-1">
-        Chapter ...
-      </div>
-    </v-card-text>
-    <!--    <v-divider class="mx-4"></v-divider>-->
-    <v-card-title>Tonight's availability</v-card-title>
-    <!--    <v-card-actions>
-          <v-btn
-            color="deep-purple lighten-2"
-            text
-            @click="reserve"
-          >
-            Reserve
-          </v-btn>
-        </v-card-actions>-->
-    <template slot="progress">
-      <v-progress-linear
-        color="deep-purple"
-        height="10"
-        indeterminate
-      ></v-progress-linear>
-    </template>
-
-    <v-img
-      height="250"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-    ></v-img>
-
-    <v-card-title>Cafe Badilico</v-card-title>
-
-    <v-card-text>
-      <v-row
-        align="center"
-        class="mx-0"
-      >
-        <v-rating
-          :value="4.5"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
-
-        <div class="grey--text ms-4">
-          4.5 (413)
-        </div>
-      </v-row>
-
-      <div class="my-4 text-subtitle-1">
-        Chapter ...
-      </div>
-    </v-card-text>
-    <!--    <v-divider class="mx-4"></v-divider>-->
-    <v-card-title>Tonight's availability</v-card-title>
-    <!--    <v-card-actions>
-          <v-btn
-            color="deep-purple lighten-2"
-            text
-            @click="reserve"
-          >
-            Reserve
-          </v-btn>
-        </v-card-actions>-->
-  </v-card>
-
-
+  <v-app>
+    <v-container fluid  >
+      <h1 class="mb-5 yellow--text">Top Tranding</h1>
+      <v-layout row fill-height >
+        <v-flex v-for="i in 3" :key="`4${i}`" xs4>
+          <v-card dark color="primary" class="rounded-0 ma-1" >
+            <v-card-text class="pa-1">
+              <v-img
+                height="250"
+                src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+              ></v-img>
+              <v-card-title class="py-0" ><a class="red--text">Cafe Badilico</a></v-card-title>
+                <v-row
+                  align="center"
+                  class="ma-1"
+                >
+                  <v-rating
+                    :value="4.5"
+                    color="amber"
+                    dense
+                    half-increments
+                    readonly
+                    size="14"
+                  ></v-rating>
+                  <div class="grey&#45;&#45;text ms-4">
+                    4.5 (413)
+                  </div>
+                </v-row>
+                <div class="text-subtitle-1">
+                  Chapter ...
+                </div>
+            </v-card-text>
+          </v-card>
+          <v-card dark color="primary" class="rounded-0 ma-1" >
+            <v-card-text class="pa-1">
+              <v-img
+                height="250"
+                src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+              ></v-img>
+              <v-card-title class="py-0" ><a class="red--text">Cafe Badilico</a></v-card-title>
+              <v-row
+                align="center"
+                class="ma-1"
+              >
+                <v-rating
+                  :value="4.5"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+                <div class="grey&#45;&#45;text ms-4">
+                  4.5 (413)
+                </div>
+              </v-row>
+              <div class="text-subtitle-1">
+                Chapter ...
+              </div>
+            </v-card-text>
+          </v-card>
+          <v-card dark color="primary" class="rounded-0 ma-1" >
+            <v-card-text class="pa-1">
+              <v-img
+                height="250"
+                src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+              ></v-img>
+              <v-card-title class="py-0" ><a class="red--text">Cafe Badilico</a></v-card-title>
+              <v-row
+                align="center"
+                class="ma-1"
+              >
+                <v-rating
+                  :value="4.5"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+                <div class="grey&#45;&#45;text ms-4">
+                  4.5 (413)
+                </div>
+              </v-row>
+              <div class="text-subtitle-1">
+                Chapter ...
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-app>
 </template>
-
 <script>
 export default {
   name:'CardList',

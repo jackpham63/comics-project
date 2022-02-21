@@ -1,11 +1,6 @@
 <template>
     <v-col>
-      <v-sheet class="white "
-        min-height="70vh"
-        rounded="rounded-0"
-      >
         <CardList></CardList>
-      </v-sheet>
     </v-col>
 </template>
 
