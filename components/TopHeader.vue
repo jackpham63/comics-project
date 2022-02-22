@@ -48,7 +48,7 @@
         flat
         tile
       >
-        <v-btn class="red--text">
+        <v-btn class="red--text" @click="$store.dispatch('fireTest')">
           Login/ SignIn
         </v-btn>
       </v-card>

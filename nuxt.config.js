@@ -27,8 +27,7 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -41,25 +40,6 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-/*  modules: [
-    [
-      '@nuxtjs/firebase',
-      {
-        config: {
-          apiKey: '<apiKey>',
-          authDomain: '<authDomain>',
-          projectId: '<projectId>',
-          storageBucket: '<storageBucket>',
-          messagingSenderId: '<messagingSenderId>',
-          appId: '<appId>',
-          measurementId: '<measurementId>'
-        },
-        services: {
-          auth: true // Just as example. Can be any other service.
-        }
-      }
-    ]
-  ],*/
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -85,7 +65,38 @@ export default {
       brands:true
     }
   },
+  modules: [
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: "AIzaSyCp7DIg2VBIef0f5d4nEuTloBI31B5I2WU",
+          authDomain: "comics-project-57bdb.firebaseapp.com",
+          databaseURL: "https://comics-project-57bdb-default-rtdb.firebaseio.com",
+          projectId: "comics-project-57bdb",
+          storageBucket: "comics-project-57bdb.appspot.com",
+          messagingSenderId: "174004654948",
+          appId: "1:174004654948:web:ee13b9fd2d1e53e5166071",
+          measurementId: "G-CL6WLKMP2S"
+        },
+        services: {
+          auth: {
+            persistence: 'local', // default
+            initialize: {
+              onAuthStateChangedAction: 'onAuthStateChangedAction',
+              subscribeManually: false
+            },
+            ssr: false, // default
+
+          }
+        }
+      }
+    ]
+  ],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  router:{
+    middleware: "auth"
   }
 }
