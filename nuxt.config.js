@@ -70,7 +70,7 @@ export default {
       '@nuxtjs/firebase',
       {
         config: {
-          apiKey: "AIzaSyCp7DIg2VBIef0f5d4nEuTloBI31B5I2WU",
+          apiKey: "AIzaSyCp7DIg2VB  Ief0f5d4nEuTloBI31B5I2WU",
           authDomain: "comics-project-57bdb.firebaseapp.com",
           databaseURL: "https://comics-project-57bdb-default-rtdb.firebaseio.com",
           projectId: "comics-project-57bdb",
@@ -91,7 +91,8 @@ export default {
           }
         }
       }
-    ]
+    ],
+    ['@nuxtjs/axios'],
   ],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

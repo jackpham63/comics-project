@@ -43,22 +43,16 @@
         </v-text-field>
       </v-responsive>
       <v-spacer></v-spacer>
-      <v-card
-        class="d-flex flex-row-reverse"
-        flat
-        tile
-      >
-        <v-btn class="red--text" @click="$store.dispatch('fireTest')">
-          Login/ SignIn
-        </v-btn>
-      </v-card>
+      <signout/>
     </v-container>
   </v-app-bar>
 </template>
 
 <script>
+import Signout from "@/pages/auth/signout";
 export default {
   name: "TopHeader",
+  components: {Signout},
   data: () => ({
     categories:[
       'ACTION',
