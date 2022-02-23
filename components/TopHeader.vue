@@ -10,9 +10,11 @@
           src="https://t4.ftcdn.net/jpg/03/03/25/95/360_F_303259500_YRo4yGlHJ57sPVIHyE9bg5I1Plw3miuB.jpg"
           alt="Admin"></v-avatar>
       <section class="ml-3">
-        <v-btn text>
-          Home
-        </v-btn>
+        <NuxtLink :to="{name: 'index'}">
+          <v-btn text>
+            Home
+          </v-btn>
+        </NuxtLink>
         <v-btn text>
           Lastest Updates
         </v-btn>
@@ -29,6 +31,7 @@
         </NuxtLink>
       </section>
       <v-spacer></v-spacer>
+
       <v-responsive max-width="260">
         <v-text-field
           dense
@@ -41,9 +44,12 @@
         >
 
         </v-text-field>
+
       </v-responsive>
       <v-spacer></v-spacer>
-      <signout/>
+
+<!--      <signout/>-->
+      <TheProfile/>
     </v-container>
   </v-app-bar>
 </template>

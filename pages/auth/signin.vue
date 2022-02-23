@@ -21,28 +21,26 @@
                   <v-tab :href="`#tab-newUser`">
                     New User
                   </v-tab>
-
                   <!--                  CONTROL-->
                   <v-tab-item :value="'tab-login'" >
                     <v-form>
                       <v-container>
                         <v-row class="flex-column">
-
 <!--                          FUNCTION SIGN IN WITH GOOGLE-->
                           <!--                          test and update later-->
-<!--                          <v-col>
+                          <v-col>
                             <p class="login-slogan display-2 text-center font-weight-medium my-10">MANGAFOX ACCOUNT</p>
-                            <v-btn height="45" block color="red" elevation="0" class="google text-capitalize">
+                            <v-btn height="45" block color="red" elevation="0" class="google text-capitalize" @click="signInWithGoogle">
                               Sign in with Google</v-btn>
-                          </v-col>-->
-<!--                          <v-col cols="12" class="d-flex align-center my-8">
+                          </v-col>
+                          <v-col cols="12" class="d-flex align-center my-8">
                             <v-divider></v-divider>
                             <span class="px-5"> or </span>
                             <v-divider></v-divider>
                           </v-col>
-                          <v-col class="yellow&#45;&#45;text d-flex align-center justify-center">
+                          <v-col class="yellow--text d-flex align-center justify-center">
                             <H1>SIGNUP</H1>
-                          </v-col>-->
+                          </v-col>
 <!--                          LOGIN AUTH-->
                           <v-form>
                             <v-col>
@@ -61,18 +59,14 @@
                                 v-model="auth.password"
                                 :rules="auth.passRules"
                               ></v-text-field>
-
                             </v-col>
                             <v-col class="d-flex justify-space-between">
                               <v-btn
                                 class="text-capitalize"
                                 color="primary"
                                 @click="login"
-                              >
-<!--
-                                @click="login"
                                 large
-                                :disabled="password.length === 0 || email.length === 0"-->
+                              >
                                 Login</v-btn>
                               <v-btn large text class="text-capitalize primary--text" @click="forgotPassword" >Forget Password</v-btn>
                             </v-col>
@@ -82,32 +76,30 @@
                     </v-form>
                   </v-tab-item>
 <!--                  CREATE NEW USERS-->
-<!--                  <v-tab-item :value="'tab-newUser'" >
+                  <v-tab-item :value="'tab-newUser'" >
                     <v-form>
                       <v-container>
                         <v-row class="flex-column">
-
                           <v-col>
                             <p class="login-slogan display-2 text-center font-weight-medium mt-10">Welcome!</p>
                             <p class="login-slogan display-1 text-center font-weight-medium mb-10">Create your account</p>
                           </v-col>
-
                           <v-form>
                             <v-col>
                               <v-text-field
-                                v-model="createFullName"
+                                v-model="auth.createFullName"
                                 label="Full Name"
                                 required
                               ></v-text-field>
                               <v-text-field
-                                v-model="createEmail"
-                                :rules="emailRules"
+                                v-model="auth.createEmail"
+                                :rules="auth.emailRules"
                                 label="Email Address"
                                 required
                               ></v-text-field>
                               <v-text-field
-                                v-model="createPassword"
-                                :rules="passRules"
+                                v-model="auth.createPassword"
+                                :rules="auth.passRules"
                                 type="password"
                                 label="Password"
                                 hint="At least 6 characters"
@@ -118,7 +110,7 @@
                               <v-btn
                                 large
                                 block
-                                :disabled="createFullName.length === 0 || createEmail.length === 0 || createPassword === 0"
+                                :disabled="auth.createFullName.length === 0 || auth.createEmail.length === 0 || auth.createPassword === 0"
                                 color="primary"
                                 @click="login"
                               >
@@ -126,26 +118,22 @@
                             </v-col>
                           </v-form>
 
-                          <v-col cols="12" class="d-flex align-center my-4">
-                            <v-divider></v-divider>
-                            <span class="px-5"> or </span>
-                            <v-divider></v-divider>
-                          </v-col>
-                          <v-col>
-
-                            <v-btn height="45" block color="red" elevation="0" class="google text-capitalize">
-                              Sign in with Google</v-btn>
-                          </v-col>
-
-                          <v-btn height="45" block color="white" elevation="0" class="google text-capitalize">
-                            <v-img src="@/assets/google.svg" max-width="30" class="mr-4"></v-img>
-                            Sign in with Google</v-btn>
                         </v-row>
                       </v-container>
                     </v-form>
-                  </v-tab-item>-->
+                  </v-tab-item>
                 </v-tabs>
+                <v-snackbar
+                  :timeout="4000"
+                  v-model="snackbar"
+                  absolute
+                  bottom
+                  center
+                >
+                  {{ snackbarText }}
+                </v-snackbar>
               </div>
+
             </v-col>
           </v-row>
         </v-col>
@@ -156,97 +144,67 @@
 <script>
 export default {
   name: 'signin',
-  /*data() {
-    return {
-      snackbar: false,
-      snackbarText: 'No error message',
-      auth: {
-        email: '',
-        password: ''
-      }
-    }
-  },
-  methods: {
-    login() {
-      let that = this
-      this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password)
-        .catch(function (error){
-          that.snackbarText = error.message
-          that.snackbar = true
-        }).then((user) => {
-        //we are signed in
-        $nuxt.$router.push('/')
-      })
-    },
-    forgotPassword() {
-      let that = this
-      this.$fire.auth.sendPasswordResetEmail(this.auth.email)
-        .then(function (){
-          that.snackbarText = 'reset link sent to ' + that.auth.email
-          that.snackbar = true
-        })
-        .catch(function (error) {
-          that.snackbarText = error.message
-          that.snackbar = true
-        })
-    }
-  }*/
-
    data() {
      return {
+       snackbar: false,
+       snackbarText: 'Again',
        auth:{
          /*check */
-         email: 'phuocphamtran63@gmail.com',
+         email: 'phamhongphuoc@gmail.com',
          emailRules: [
            v => !!v || 'E-mail is required',
            v => /.+@.+/.test(v) || 'E-mail must be valid',
          ],
          /*check password*/
-         password: '12345678910',
+         password: '123456789',
          passRules: [
            v => !!v || 'Password is required',
            v => v.length >= 6 || 'Min 6 characters'
-         ]
-         /* createFullName: 'Pham Hong Ph',
+         ],
+          createFullName: 'Pham Hong Phuoc',
          createEmail: 'phamhongphuoc@gmail.com',
-         createPassword: '123456',*/
+         createPassword: '123456',
        },
-
      }
    },
     methods: {
       login(){
-       /*window.localStorage.setItem('authenticated', true);
-        this.$router.push('/dashboard');*/
         let that = this
         this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password)
           .catch(function (error){
-            /*that.snackbarText = error.message
-            that.snackbar = true*/
-            console.log("Signin Fail with ",error)
+            that.snackbarText = error.message
+            that.snackbar = true
           }).then((user) => {
+          console.log('user')
           //we are signed in
-        console.log("SIGNIN SUCCESS")
+        console.log(user)
          that.$router.push('/')
         })
+      },
+      forgotPassword() {
+        let that = this
+        this.$fire.auth.sendPasswordResetEmail(this.auth.email)
+          .then(function (){
+            that.snackbarText = 'reset link sent to ' + that.auth.email
+            that.snackbar = true
+          })
+          .catch(function (error) {
+            that.snackbarText = error.message
+            that.snackbar = true
+          })
+      },
+      async signInWithGoogle() {
+        let that = this
+        var provider = new this.$fireModule.auth.GoogleAuthProvider();
+        // You can add or remove more scopes here provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        let authData = await this.$fire.auth.signInWithPopup(provider)
+        that.authData.then((loggedResult)=>{
+          console.log("done", loggedResult)
+        })
+        that.$router.push('/')
       }
     },
-   // created() {
-   //   if (window.localStorage.getItem('authenticated') === 'true') {
-   //     this.$router.push('/dashboard');
-   //   }
-   // }
 }
-
-
-//test
-
-
-
-
-
-
-
 </script>
 
 
