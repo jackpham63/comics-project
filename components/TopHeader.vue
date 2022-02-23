@@ -15,7 +15,7 @@
             Home
           </v-btn>
         </NuxtLink>
-        <v-btn text>
+        <v-btn text @click="$store.dispatch('fireTest')">
           Lastest Updates
         </v-btn>
         <v-btn text>
@@ -31,7 +31,6 @@
         </NuxtLink>
       </section>
       <v-spacer></v-spacer>
-
       <v-responsive max-width="260">
         <v-text-field
           dense
@@ -42,9 +41,7 @@
           dark
           placeholder=" Search manga ..."
         >
-
         </v-text-field>
-
       </v-responsive>
       <v-spacer></v-spacer>
 
@@ -71,7 +68,8 @@ export default {
       'SHOUJO',
       'SHOUNEN',
     ],
-  }),
+  }
+  ),
 }
 </script>
 

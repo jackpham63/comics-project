@@ -70,14 +70,19 @@ export default {
       '@nuxtjs/firebase',
       {
         config: {
-          apiKey: "AIzaSyCp7DIg2VB  Ief0f5d4nEuTloBI31B5I2WU",
-          authDomain: "comics-project-57bdb.firebaseapp.com",
-          databaseURL: "https://comics-project-57bdb-default-rtdb.firebaseio.com",
-          projectId: "comics-project-57bdb",
-          storageBucket: "comics-project-57bdb.appspot.com",
-          messagingSenderId: "174004654948",
-          appId: "1:174004654948:web:ee13b9fd2d1e53e5166071",
-          measurementId: "G-CL6WLKMP2S"
+          development:{
+            apiKey: "AIzaSyCp7DIg2VB  Ief0f5d4nEuTloBI31B5I2WU",
+            authDomain: "comics-project-57bdb.firebaseapp.com",
+            databaseURL: "https://comics-project-57bdb-default-rtdb.firebaseio.com",
+            projectId: "comics-project-57bdb",
+            storageBucket: "comics-project-57bdb.appspot.com",
+            messagingSenderId: "174004654948",
+            appId: "1:174004654948:web:ee13b9fd2d1e53e5166071",
+            measurementId: "G-CL6WLKMP2S"
+          },
+          clients: {
+            //
+          }
         },
         services: {
           auth: {
@@ -87,17 +92,30 @@ export default {
               subscribeManually: false
             },
             ssr: false, // default
-
-          }
+          },
+          firestore: true,
+          functions: true,
+          storage: true,
+          database: true,
+          messaging: true,
+          performance: true,
+          analytics: true,
+          remoteConfig: true
         }
       }
     ],
     ['@nuxtjs/axios'],
   ],
+  axios: {
+    // proxy: true
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
   router:{
     middleware: "auth"
-  }
+  },
+  env: {
+    FIRE_ENV: process.env.FIRE_ENV
+  },
 }

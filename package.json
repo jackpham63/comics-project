@@ -6,7 +6,9 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "serveDevelopment": "FIRE_ENV=development nuxt",
+    "serveClients": "FIRE_ENV=clients nuxt"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.3.0",

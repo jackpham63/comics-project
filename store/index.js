@@ -1,4 +1,6 @@
-const actions = {
+import $fireModule from "firebase/compat";
+
+export const actions = {
   async onAuthStateChangedAction(state, { authUser, claims }) {
     if (!authUser) {
       // remove state
@@ -15,6 +17,20 @@ const actions = {
       })
     }
   },
+fireTest(){
+    const payload = {
+      one: 'Apple',
+      two: 'Oranges'
+    }
+      $fireModule.database().ref('testdb').push(payload)
+      .then(()=>{
+        console.log("thanhcong")
+        alert("hihi")
+      })
+      .catch(error => {
+        console.log('ERROR', error)
+      })
+}
 }
 const mutations = {
   SET_USER(state, user) {
