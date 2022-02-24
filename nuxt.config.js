@@ -28,7 +28,6 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
 
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -38,10 +37,6 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/fontawesome',
   ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
-
-  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -109,8 +104,10 @@ export default {
   axios: {
     // proxy: true
   },
+ /* plugins: [ { src: '~/plugins/vee-validate.js', ssr: true }],*/
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    /*transpile: ['vee-validate']*/
   },
   router:{
     middleware: "auth"

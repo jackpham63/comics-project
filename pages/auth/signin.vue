@@ -112,7 +112,7 @@
                                 block
                                 :disabled="auth.createFullName.length === 0 || auth.createEmail.length === 0 || auth.createPassword === 0"
                                 color="primary"
-                                @click="login"
+                                @click="onSignUp"
                               >
                                 Create your account</v-btn>
                             </v-col>
@@ -142,6 +142,8 @@
   </v-app>
 </template>
 <script>
+import $fireModule from "firebase/compat";
+
 export default {
   name: 'signin',
    data() {
@@ -171,15 +173,30 @@ export default {
       login(){
         let that = this
         this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password)
-          .catch(function (error){
-            that.snackbarText = error.message
-            that.snackbar = true
-          }).then((user) => {
-          console.log('user')
-          //we are signed in
-        console.log(user)
-         that.$router.push('/')
+        .then(()=>{
+          console.log("email", this.auth.email);
+          console.log("ps", this.auth.password);
+          that.$router.push('/')
         })
+        .catch(function (error){
+          console.log("Khong dung", error)
+          that.snackbarText = error.message
+          that.snackbar = true
+        })
+
+      },
+      onSignUp(){
+        const signUpData = {
+          fullName: this.auth.createFullName,
+          email: this.auth.createEmail,
+          password: this.auth.createPassword
+        }
+        console.log("Signup with email",signUpData.email )
+        console.log("Signup with name",signUpData.fullName )
+        $fireModule.database().ref('hihi').push(signUpData).then(
+          (loggedResult)=>{
+            console.log("test",loggedResult)
+          })
       },
       forgotPassword() {
         let that = this
@@ -195,13 +212,32 @@ export default {
       },
       async signInWithGoogle() {
         let that = this
-        var provider = new this.$fireModule.auth.GoogleAuthProvider();
+        const provider= new this.$fireModule.auth.GoogleAuthProvider();
         // You can add or remove more scopes here provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-        let authData = await this.$fire.auth.signInWithPopup(provider)
-        that.authData.then((loggedResult)=>{
+        const authData = await this.$fire.auth.signInWithPopup(provider).then((loggedResult)=>{
+          const providerData = loggedResult.user.providerData[0];
+          if(loggedResult.additionalUserInfo.isNewUser){
+            const { email, displayName: fullName, photoURL, uid } = providerData;
+            const data = {
+              email: email,
+              fullName: fullName,
+              photoURL: photoURL,
+              uid: uid,
+            };
+          $fireModule.database()
+            .ref('Users')
+            .push(data)
+            .then((result)=>{
+              data.id = result.id;
+              console.log("add result",data);
+            })
+          }else{
+
+          }
           console.log("done", loggedResult)
+          that.$router.push('/')
         })
-        that.$router.push('/')
+
       }
     },
 }

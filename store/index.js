@@ -17,7 +17,7 @@ export const actions = {
       })
     }
   },
-fireTest(){
+  fireTest(){
     const payload = {
       one: 'Apple',
       two: 'Oranges'
@@ -25,25 +25,56 @@ fireTest(){
       $fireModule.database().ref('testdb').push(payload)
       .then(()=>{
         console.log("thanhcong")
-        alert("hihi")
       })
       .catch(error => {
         console.log('ERROR', error)
       })
+  },
+  /*signUpUser() {
+    let newUser = null
+    const signUpData = {
+      fullName: this.auth.createFullName,
+      email: this.auth.createEmail,
+      password: this.auth.createPassword
+    }
+    $fireModule.auth.createUserWithEmailAndPassword(signUpData.email,signUpData.password)
+      .then(user =>{
+        console.log("Signup with email",signUpData.email )
+        console.log("Signup with name",signUpData.fullName )
+        newUser = user
+        user.updateProfile({displayName: signUpData.fullName})
+        const currentUser = {
+          id: user.uid,
+          email: user.email,
+          name: user.fullName,
+          role: "consumer"
+        }
+        console.log('USER', currentUser)
+      })
+      .then(()=>{
+        const userData = {
+          email: signUpData.email,
+          fullName: signUpData.fullName,
+          createdAt: new Date().toISOString()
+        }
+        $fireModule.database().ref(`users/${newUser.uid}`).push(userData)
+      })
+
+  }*/
 }
-}
+export const state = () => ({
+  user: null,
+
+})
 const mutations = {
+
   SET_USER(state, user) {
     state.user = user
   },
 }
-const state = () => ({
-  user: null,
-})
-const getters = {
-  getUser(state) {
-    return state.user
-  },
+export const getters = {
+
+
 }
 export default {
   state,
