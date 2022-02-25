@@ -14,7 +14,6 @@
   export default {
     name:'MangaList',
     components: {MangaSmall, MangaLarge},
-
   }
   </script>
   <style scoped>

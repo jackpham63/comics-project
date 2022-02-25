@@ -133,7 +133,6 @@
                   {{ snackbarText }}
                 </v-snackbar>
               </div>
-
             </v-col>
           </v-row>
         </v-col>
@@ -179,7 +178,7 @@ export default {
           that.$router.push('/')
         })
         .catch(function (error){
-          console.log("Khong dung", error)
+          console.log("Khong dung"  , error)
           that.snackbarText = error.message
           that.snackbar = true
         })

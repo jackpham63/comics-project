@@ -44,8 +44,6 @@
         </v-text-field>
       </v-responsive>
       <v-spacer></v-spacer>
-
-<!--      <signout/>-->
       <TheProfile/>
     </v-container>
   </v-app-bar>

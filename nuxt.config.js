@@ -105,6 +105,10 @@ export default {
     // proxy: true
   },
  /* plugins: [ { src: '~/plugins/vee-validate.js', ssr: true }],*/
+  plugins: [
+
+    { src: '~/plugins/notificationsClient', ssr: false }
+  ],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     /*transpile: ['vee-validate']*/
