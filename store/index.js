@@ -1,29 +1,73 @@
 import $fireModule from "firebase/compat";
 import { getAuth, updateProfile } from "firebase/auth";
 const actions = {
-  signUpUser({commit},payload){
-    console.log("tesst data", payload)
-   $fireModule.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-        .then((user) =>{
-          console.log("dangkythanhcong", user)
-          const proData = user.user.multiFactor.user[0];
-          if(user.additionalUserInfo.isNewUser){
-            const { email } = proData;
-            const data = {
-              email: email,
+  async signUpUser({commit}, payload) {
+    $fireModule.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+      .then((response)=>{
+       /* newUser=user
+        console.log("oke oke ", user)
+        const auth = getAuth();*/
+        $fireModule.auth().currentUser.updateProfile({
+          displayName: payload.name,
 
-            };
-            $fireModule.database()
-              .ref('Users')
-              .push(data)
-              .then((result)=>{
-                data.id = result.id;
-                console.log("add result",data);
-              })
-          }else{
-
+        })
+          .then(   ()=>{
+            const currentUser = {
+              id : response.uid ,
+              email: payload.email,
+              name: payload.name,
           }
         })
+          .then((oke)=>{
+
+          const data = {
+            email: email,
+            fullName: fullName,
+            photoURL: photoURL,
+            uid: uid,
+          };
+          $fireModule.database()
+            .ref('groups')
+            .push(userData)
+        })
+      })
+/*/!*    updateProfile(auth.currentUser, {
+      displayName: payload.name
+    }).then(() => {
+      const currentUser = {
+        id : newUser.uid ,
+        email: payload.email,
+        name: payload.name,
+      }
+
+      console.log("user", currentUser)
+      commit('setUser', currentUser)
+    })
+      .then( () => {
+        const userData = {
+          email: payload.email,
+          name: payload.name,
+          createdAt: new Date().toISOString()
+        }
+        console.log(userData)
+          $fireModule.database().ref("add").push(userData)
+/!*        $fireModule.database().ref("add").push(currentUser)*!/}*!/
+
+      )*/
+      /*   .then(()=>{
+           const userData = {
+             email: payload.email,
+             name: payload.name,
+             createdAt: new Date().toISOString()
+           }
+           $fireModule.database().ref(`users/${newUser.uid}`).set(userData).then(r => {
+
+           })
+         })*/
+      .catch((error) => {
+
+      });
+
   },
   async onAuthStateChangedAction(state, { authUser, claims }) {
     if (!authUser) {
@@ -41,7 +85,6 @@ const actions = {
       })
     }
   },
-
 }
 const state = () => ({
   user: null,

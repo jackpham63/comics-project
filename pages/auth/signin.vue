@@ -196,10 +196,6 @@ export default {
         }
         console.log("Signup with email",signUpData.email )
         console.log("Signup with name",signUpData.fullName )
-        // $fireModule.database().ref('hihi').push(signUpData).then(
-        //   (loggedResult)=>{
-        //     console.log("test",loggedResult)
-        //   })
         this.$store.dispatch('signUpUser', signUpData)
       },
       forgotPassword() {
@@ -234,20 +230,17 @@ export default {
             .then((result)=>{
               data.id = result.id;
               console.log("add result",data);
-
             })
-            .then(()=>{
+        /*    .then(()=>{
               return $fireModule.database().ref('groups').oderByChild('name').equalTo('Customer').once('value')
               .then(snapShot =>{
                 const groupKey = Object.keys(snapShot.val())[0]
-                let groupedUser = {
-                }
-                groupedUser[data.uid] = this.fullName
+                let groupedUser = {}
+                groupedUser[providerData.uid] = data.fullName
                 return $fireModule.database().ref(`userGroups/${groupKey}`).update(groupedUser)
               } )
-            })
+            })*/
           }else{
-
           }
           console.log("done", loggedResult)
           that.$router.push('/')
