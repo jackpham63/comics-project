@@ -1,4 +1,4 @@
-<template>
+  <template>
   <v-app>
     <v-container fluid>
       <v-row no-gutters>
@@ -77,7 +77,7 @@
                   </v-tab-item>
 <!--                  CREATE NEW USERS-->
                   <v-tab-item :value="'tab-newUser'" >
-                    <v-form>
+                    <v-form @submit.prevent="onSignUp">
                       <v-container>
                         <v-row class="flex-column">
                           <v-col>
@@ -169,6 +169,10 @@ export default {
      }
    },
     methods: {
+      jobsDone(){
+        this.group = null
+        this.name = ""
+      },
       login(){
         let that = this
         this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password)
@@ -192,10 +196,11 @@ export default {
         }
         console.log("Signup with email",signUpData.email )
         console.log("Signup with name",signUpData.fullName )
-        $fireModule.database().ref('hihi').push(signUpData).then(
-          (loggedResult)=>{
-            console.log("test",loggedResult)
-          })
+        // $fireModule.database().ref('hihi').push(signUpData).then(
+        //   (loggedResult)=>{
+        //     console.log("test",loggedResult)
+        //   })
+        this.$store.dispatch('signUpUser', signUpData)
       },
       forgotPassword() {
         let that = this
@@ -229,6 +234,17 @@ export default {
             .then((result)=>{
               data.id = result.id;
               console.log("add result",data);
+
+            })
+            .then(()=>{
+              return $fireModule.database().ref('groups').oderByChild('name').equalTo('Customer').once('value')
+              .then(snapShot =>{
+                const groupKey = Object.keys(snapShot.val())[0]
+                let groupedUser = {
+                }
+                groupedUser[data.uid] = this.fullName
+                return $fireModule.database().ref(`userGroups/${groupKey}`).update(groupedUser)
+              } )
             })
           }else{
 

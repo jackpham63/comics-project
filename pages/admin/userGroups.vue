@@ -1,14 +1,8 @@
+<script src="../../store/index.js"></script>
 <template>
   <v-app light>
     <v-content>
       <TopHeader/>
-<!--      <v-container>
-      <v-row>
-        <v-col cols="4">
-        </v-col>
-        <v-col cols="8"><h1>02</h1></v-col>
-      </v-row>
-      </v-container>-->
       <v-container style="height: 100vh;">
         <div class="tables-basic">
           <h1 class="page-title mt-10 mb-6">Users Group</h1>
@@ -18,8 +12,9 @@
           <v-row>
             <v-col cols="4">
              <v-form @submit.prevent="onSubmit">
-               <h1>01</h1>
-                <notifications group="foo"></notifications>
+               <h2 v-if="!group">New User Group</h2>
+               <h2 v-else>Update User Group</h2>
+               <notifications group="foo"></notifications>
                <v-text-field
                  label="New User Group"
                  clearable
@@ -33,7 +28,22 @@
                  type="submit"
               @click="doNotification"
                >
-                 Create
+                 {{!group ? 'Create' : 'Update'}}
+               </v-btn>
+               <v-btn
+                 color="error"
+                 type="submit"
+                 click="cancelUpdate"
+               v-if="!group"
+               >Cancel </v-btn>
+               <v-btn
+
+                 color="error"
+
+                 @click="cancelUpdate()"
+                 v-if="group"
+               >
+                 Cancel
                </v-btn>
              </v-form>
             </v-col>
@@ -86,6 +96,7 @@
                           link
                           color="secondary"
                           class="ma-2 ml-0"
+                          href="#" @click.prevent="removeGroup(group)"
                         >
                           Declined
                         </v-chip>
@@ -125,15 +136,43 @@ export default {
     },
     onSubmit (){
      /* console.log("hihihih",this.name)*/
+      // this.$store.dispatch('admin/createGroup', {name: this.name}).then(()=>{
+      //   this.showLoginError({message})
+      // })
+    if(!this.group){
+      this.$store.dispatch('admin/createGroup',  {name : this.name})
+      console.log("CREATE GROUP")
 
-      this.$store.dispatch('admin/createGroup', {name: this.name}).then(()=>{
-        this.showLoginError({message})
-      })
+    }else{
+      this.$store.dispatch('admin/updateGroup', {name :  this.name, group : this.group})
+      console.log("UPDATE GROUP")
 
+    }
     },
     selectGroup(group){
       this.group = group
       this.name = group.name
+    },
+    removeGroup(group){
+      console.log("remove")
+      this.$swal({
+          title: 'Delete the group?',
+          icon: 'waring',
+        buttons: true,
+        dangerMode: true
+      }).then(oke=>{
+        if(oke){
+          this.$store.dispatch('admin/removeGroup', {group: group})
+        }
+      })
+    },
+    cancelUpdate(){
+      this.group = null
+      this.jobsDone()
+    },
+    jobsDone(){
+      this.group = null
+      this.name = ""
     },
     doNotification(){
       this.$notify({

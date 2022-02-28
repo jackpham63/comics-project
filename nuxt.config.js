@@ -106,7 +106,7 @@ export default {
   },
  /* plugins: [ { src: '~/plugins/vee-validate.js', ssr: true }],*/
   plugins: [
-
+    {src:'~/plugins/vueSwal',ssr: false},
     { src: '~/plugins/notificationsClient', ssr: false }
   ],
   // Build Configuration: https://go.nuxtjs.dev/config-build
