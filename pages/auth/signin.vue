@@ -173,20 +173,33 @@ export default {
         this.group = null
         this.name = ""
       },
+      //login
       login(){
         let that = this
         this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password)
-        .then(()=>{
-          console.log("email", this.auth.email);
-          console.log("ps", this.auth.password);
+          .then((user)=>{
+            const authUser = {
+              id: user.user.uid,
+              email: user.user.email,
+              name: user.user.displayName,
+            }
+            return $fireModule.database().ref('groups').orderByChild('name').equalTo('Administrator').once('value')
+            .then((ugroupSnap)=>{
+              if(ugroupSnap.exists()){
+                authUser.role = 'admin'
+              }else{
+                authUser.role = 'customer'
+              }
+            })
+            .catch((error)=>{
+              console.log('bi loi dang nhap roi', error)
+              that.snackbarText = error.message
+              that.snackbar = true
+            })
+          })
           that.$router.push('/')
-        })
-        .catch(function (error){
-          console.log("Khong dung"  , error)
-          that.snackbarText = error.message
-          that.snackbar = true
-        })
       },
+      //signup with email & password
       onSignUp(){
         const signUpData = {
           fullName: this.auth.createFullName,
@@ -235,6 +248,7 @@ export default {
             })
         })
       },
+      //forgot password sent email
       forgotPassword() {
         let that = this
         this.$fire.auth.sendPasswordResetEmail(this.auth.email)
@@ -247,6 +261,8 @@ export default {
             that.snackbar = true
           })
       },
+
+      //sign in and check login with google
       async signInWithGoogle() {
         let that = this
         const provider= new this.$fireModule.auth.GoogleAuthProvider();
