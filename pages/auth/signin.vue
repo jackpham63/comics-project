@@ -186,7 +186,6 @@ export default {
           that.snackbarText = error.message
           that.snackbar = true
         })
-
       },
       onSignUp(){
         const signUpData = {
@@ -196,7 +195,45 @@ export default {
         }
         console.log("Signup with email",signUpData.email )
         console.log("Signup with name",signUpData.fullName )
-        this.$store.dispatch('signUpUser', signUpData)
+   /*     this.$store.dispatch('signUpUser', signUpData)*/
+        let newUser = null
+        $fireModule.auth().createUserWithEmailAndPassword(signUpData.email, signUpData.password)
+          .then((user)=>{
+            newUser = user
+            console.log("test full name", signUpData.fullName)
+            console.log("email dang ky", signUpData.email)
+            console.log("mat khau dang ky", signUpData.password)
+            console.log("dangky-account",user)
+            const pro = user.user.providerData[0];
+            console.log("thong tin account dang ky  ",pro)
+            const currentUser = {
+              id: user.user.uid,
+              email: signUpData.email,
+              name: signUpData.fullName,
+              photoURL: pro.photoURL,
+            }
+            console.log("current user", currentUser)
+          })
+        .then(()=>{
+          const userData = {
+            email: signUpData.email,
+            fullName: signUpData.fullName,
+            createdAt: new Date().toISOString()
+          }
+          console.log("userData", userData)
+          $fireModule.database().ref(`users/${newUser.user.uid}`).set(userData)
+          console.log("dangkythanhcong OKE")
+          this.$router.push('/')
+        })
+        .then(()=> {
+          return $fireModule.database().ref('groups').orderByChild('name').equalTo('Customer').once('value')
+            .then(snapShot=>{
+              const groupKey = Object.keys(snapShot.val())[0]
+              let groupedUser = {}
+              groupedUser[newUser.user.uid] = signUpData.fullName
+              return $fireModule.database().ref(`userGroups/${groupKey}`).update(groupedUser)
+            })
+        })
       },
       forgotPassword() {
         let that = this
@@ -231,21 +268,12 @@ export default {
               data.id = result.id;
               console.log("add result",data);
             })
-        /*    .then(()=>{
-              return $fireModule.database().ref('groups').oderByChild('name').equalTo('Customer').once('value')
-              .then(snapShot =>{
-                const groupKey = Object.keys(snapShot.val())[0]
-                let groupedUser = {}
-                groupedUser[providerData.uid] = data.fullName
-                return $fireModule.database().ref(`userGroups/${groupKey}`).update(groupedUser)
-              } )
-            })*/
           }else{
+            console.log("Dang nhap google khong thanh cong")
           }
           console.log("done", loggedResult)
           that.$router.push('/')
         })
-
       }
     },
 }
