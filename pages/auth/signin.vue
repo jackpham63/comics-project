@@ -168,36 +168,48 @@ export default {
        },
      }
    },
-    methods: {
+  beforeCreate() {
+    const loggedIn = this.$store.getters.loginStatus
+    if(loggedIn){
+      this.$router.replace('/')
+    }
+  },
+  methods: {
       jobsDone(){
         this.group = null
         this.name = ""
       },
       //login
       login(){
-        let that = this
+        const loginData = {
+          email: this.auth.email,
+          password: this.auth.password,
+        }
+        this.$store.dispatch('loginUser', loginData)
+    /*    let that = this
         this.$fire.auth.signInWithEmailAndPassword(this.auth.email, this.auth.password)
           .then((user)=>{
-            const authUser = {
+            const authUserData = {
               id: user.user.uid,
               email: user.user.email,
               name: user.user.displayName,
             }
-            return $fireModule.database().ref('groups').orderByChild('name').equalTo('Administrator').once('value')
+            this.$store.dispatch('loginUser',authUserData)
+           /!* return $fireModule.database().ref('groups').orderByChild('name').equalTo('Administrator').once('value')
             .then((ugroupSnap)=>{
               if(ugroupSnap.exists()){
-                authUser.role = 'admin'
+                authUserData.role = 'admin'
               }else{
-                authUser.role = 'customer'
+                authUserData.role = 'customer'
               }
             })
             .catch((error)=>{
               console.log('bi loi dang nhap roi', error)
               that.snackbarText = error.message
               that.snackbar = true
-            })
-          })
-          that.$router.push('/')
+            })*!/
+          })*/
+          /*that.$router.push('/')*/
       },
       //signup with email & password
       onSignUp(){

@@ -20,19 +20,29 @@
       <div class="subtitle-2 primary--text font-weight-regular px-4">{{$nuxt.$fire.auth.currentUser.email}}</div>
       <v-list-item-group color="primary">
         <NuxtLink :to="{name: 'admin-userGroups'}"><v-list-item
-          v-for="(item, i) in account"
-          :key="i" >
+          >
           <v-list-item-icon class="mr-4">
             <v-icon
-              :color="item.color"
-              v-text="item.icon">
+              :color="textColor"
+             >mdi-account
             </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title  v-text="item.text"></v-list-item-title>
+            <v-list-item-title >Update Profile</v-list-item-title>
           </v-list-item-content>
         </v-list-item></NuxtLink>
-
+        <NuxtLink :to="{name: 'admin-userGroups'}"><v-list-item
+        >
+          <v-list-item-icon class="mr-4">
+            <v-icon
+              :color="textColor"
+            >mdi-account
+            </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title >User Groups</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item></NuxtLink>
       </v-list-item-group>
       <div class="d-flex justify-center my-3">
      <signout/>
@@ -45,9 +55,9 @@ import Signout from "@/pages/auth/signout";
 export default {
   name: "TheProfile",
   data: () => ({
-    account: [
+   /* account: [
       { text: 'User Groups', icon: 'mdi-account', color: 'textColor' },
-    ],
+    ],*/
   }),
   components: {Signout}
 }
