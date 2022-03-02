@@ -10,30 +10,33 @@
           ></v-divider>
           <v-row>
             <v-col cols="12">
-              <v-form @submit.prevent="onSubmit">
-                <h2 v-if="!group">New User Group</h2>
-                <h2 v-else>Update User Group</h2>
-                <notifications group="foo"></notifications>
-                <p></p>
-                <v-text-field
-                  label="New User Group"
-                  clearable
-                  single-line
-                  hide-details
-                  v-model="name"
-                ></v-text-field>
+              <v-form @submit.prevent="updateProfile">
+               <div>
+                 <v-text-field
+                   type="text"
+                   name="fullName"
+                   label="Update Name"
+                   v-model="fullNames"
+                 ></v-text-field>
+               </div>
+                <div>
+                  <v-text-field
+                    type="text"
+                    name="email"
+                    label="Update Email "
+                    v-model="emails"
+                  >
+                  </v-text-field>
+                </div>
                 <v-btn
                   depressed
                   color="error"
                   type="submit"
-                  @click="doNotification"
                 >
                Update
                 </v-btn>
-
               </v-form>
             </v-col>
-
           </v-row>
         </div>
       </v-container>
@@ -41,10 +44,48 @@
     </v-content>
   </v-app>
 </template>
-
 <script>
 export default {
-  name: "userProfile"
+  name: "userProfile",
+  data() {
+    return {
+      emails: "",
+      fullNames: "",
+    }
+  },
+  mounted: function () {
+    const user = this.$store.$fire.auth.currentUser
+    console.log(user)
+    if (user) {
+      this.emails = user.email
+      this.fullNames = user.uid
+      console.log("test mail", user.email)
+    }
+  },
+  methods: {
+/*    updateProfile() {
+      this.$store.dispatch('updateProfile', {email: this.email, fullName: this.fullName})
+    },*/
+    jobsDone() {
+      this.$swal({
+        title: 'Profile updated successfuly',
+        icon: 'success'
+      })
+    },
+  },
+  // If data gone after page reload
+  computed: {
+ /*   userData () {
+      return this.$store.getters.user
+    }*/
+  },
+/*  watch: {
+    userData (value) {
+      if (value) {
+        this.email = value.email
+      }
+    }
+  },*/
 }
 </script>
 

@@ -1,5 +1,6 @@
 import $fireModule from "firebase/compat";
 const actions = {
+
   async loginUser({commit},payload){
     $fireModule.auth().signInWithEmailAndPassword(payload.email,payload.password)
       .then((user)=>{
@@ -45,6 +46,23 @@ const actions = {
       })
     }
   },
+/*  updateProfile({commit, getters} , payload) {
+    const user = $fireModule.auth().currentUser
+      user.updateProfile({displayName: payload.fullName})
+      .then(()=>{
+        const userData = getters.user
+        const userObj =  {
+          id : userData.id,
+          email: payload.email,
+          name: payload.fullName,
+          role: userData.role
+        }
+        commit('setUser', userObj)
+      })
+        .catch(error=>{
+          console.log(error)
+        })
+  },*/
 }
 const state = () => ({
   user: null,

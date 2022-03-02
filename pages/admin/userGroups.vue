@@ -135,10 +135,6 @@ export default {
       this.subscribed = !this.subscribed;
     },
     onSubmit (){
-     /* console.log("hihihih",this.name)*/
-      // this.$store.dispatch('admin/createGroup', {name: this.name}).then(()=>{
-      //   this.showLoginError({message})
-      // })
     if(!this.group){
       this.$store.dispatch('admin/createGroup',  {name : this.name})
       console.log("CREATE GROUP")

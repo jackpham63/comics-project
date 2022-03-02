@@ -1,5 +1,4 @@
 import $fireModule from "firebase/compat";
-
 const state = () => ({
   groups: []
 })
@@ -10,6 +9,7 @@ const mutations = {
   updateGroup(state, payload) {
     const i = state.groups.indexOf(payload.group)
     state.groups[i].name = payload.name
+
   },
   removeGroup(state, payload) {
     const i = state.groups.indexOf(payload.group)
